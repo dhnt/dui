@@ -3,9 +3,9 @@ version: "3.6"
 services:
   dui:
     build:
-        context: ./
-        dockerfile: Dockerfile
-    image: asperitus/docker-compose-ui:latest
+      context: ./
+      dockerfile: Dockerfile
+    image: dhnt/dui:latest
     restart: always
     container_name: dui
     hostname: dui
@@ -28,15 +28,6 @@ services:
       - "traefik.frontend.passHostHeader=true"
       - "traefik.frontend.rule=Host:dui.home"
       - "traefik.port=5000"
-
-  # web_console:
-  #   image: bitbull/docker-exec-web-console
-  #   environment:
-  #     - CONTEXT_PATH=/web-console/
-  #   read_only: true
-  #   restart: always
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
 
 networks:
   web:
