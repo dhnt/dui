@@ -1,0 +1,2 @@
+## docker compose ui
+/env/bin/python /app/main.py

@@ -44,7 +44,9 @@ EXPOSE 5000
 
 ENV PATH=/opt/bin:${PATH}
 
-ENTRYPOINT ["/env/bin/python", "/app/main.py"]
+ENTRYPOINT ["/opt/bin/goreman", "-basedir", "/config", "-f", "/config/Procfile", "-exit-on-error"]
+
+# ENTRYPOINT ["/env/bin/python", "/app/main.py"]
 
 WORKDIR /opt/docker-compose/
 
