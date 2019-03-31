@@ -34,3 +34,17 @@ chmod -R a+x /opt/bin
 git submodule add https://github.com/dhnt/docker-compose.git
 git submodule update --init --recursive 
 -->
+
+<!-- 
+curl -L http://127.0.0.1:2379/v2/keys/home/.A -XPUT -d value="127.0.0.1"
+curl -L "http://127.0.0.1:2379/v2/keys/m3/home/*/.A" -XPUT -d value="127.0.0.1"
+
+curl -L http://127.0.0.1:2379/v2/keys/m3/local/.A -XPUT -d value="127.0.0.1"
+curl -L "http://127.0.0.1:2379/v2/keys/m3/local/*/.A" -XPUT -d value="127.0.0.1"
+
+dig @localhost -p 8053 discodns.net.
+dig @localhost -p 8053 local.m3.
+
+apk add bind-tools
+dig @localhost -p 8053 traefik.home.m3.
+ -->

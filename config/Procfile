@@ -1,2 +1,18 @@
-## docker compose ui
-/env/bin/python /app/main.py
+##
+#
+etcd: etcd --config-file ${DHNT_BASE}/etc/etcd.conf.yml
+
+# dns
+discodns: discodns --etcd=http://127.0.0.1:2379 --listen=0.0.0.0 --port=1053
+dnscrypt: dnscrypt-proxy -config ${DHNT_BASE}/etc/dns/dnscrypt-proxy.toml
+
+# forward proxy
+gost: gost -L http://:18080?dns=127.0.0.1:8053/tcp
+
+# reverse proxy
+traefik: traefik -c ${DHNT_BASE}/etc/traefik/traefik.toml --file.directory=${DHNT_BASE}/etc/traefik/config
+
+# docker compose ui
+dui: /env/bin/python /app/main.py
+
+##
