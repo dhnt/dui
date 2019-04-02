@@ -22,6 +22,9 @@ RUN wget --no-check-certificate -qO- "https://github.com/etcd-io/etcd/releases/d
 
 RUN wget --no-check-certificate -qO traefik "https://github.com/containous/traefik/releases/download/v1.7.9/traefik_linux-amd64"
 
+RUN wget --no-check-certificate -qO- "https://github.com/gostones/mirr/releases/download/v0.1.0/mirr_0.1.0_linux_amd64.tar.gz" \
+    | tar -xzv
+
 RUN chmod -R a+x /opt/bin && chown -R root:root /opt/bin
 
 ##
@@ -31,22 +34,26 @@ RUN pip install virtualenv
 
 RUN apk add -U --no-cache curl git
 
-COPY ./requirements.txt /app/requirements.txt
+COPY docker-compose-ui/requirements.txt /app/requirements.txt
 RUN virtualenv /env && /env/bin/pip install --no-cache-dir -r /app/requirements.txt
 
-COPY . /app
+COPY docker-compose-ui /app
+RUN rm -rf \
+    /app/.git \
+    /app/demo-projects \
+    /app/screenshots
 
 VOLUME ["/opt/docker-compose"]
 
-COPY docker-compose /opt/docker-compose
+COPY docker-compose/stable /opt/docker-compose
+COPY config /opt/config
 
-EXPOSE 5000
+EXPOSE 80 443 5000 18080
 
-ENV DHNT_BASE=/app/config
+ENV DHNT_BASE=/opt/config
 ENV PATH=/opt/bin:${PATH}
+ENV DOCKER_COMPOSE_UI_YML_PATH=/opt/docker-compose
 
-ENTRYPOINT ["/opt/bin/goreman", "--basedir=/app/config", "-f", "Procfile", "--exit-on-error", "--set-ports=false", "start"]
-
-WORKDIR /opt/docker-compose/
+ENTRYPOINT ["/opt/bin/goreman", "--basedir=/opt/config", "-f", "Procfile", "--exit-on-error", "--set-ports=false", "start"]
 
 CMD []

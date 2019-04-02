@@ -1,3 +1,6 @@
 [submodule "docker-compose"]
 	path = docker-compose
 	url = https://github.com/dhnt/docker-compose.git
+[submodule "docker-compose-ui"]
+	path = docker-compose-ui
+	url = https://github.com/asperitus/docker-compose-ui.git

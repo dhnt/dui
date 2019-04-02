@@ -32,6 +32,7 @@ chmod -R a+x /opt/bin
 
 <!-- 
 git submodule add https://github.com/dhnt/docker-compose.git
+git submodule add https://github.com/asperitus/docker-compose-ui.git
 git submodule update --init --recursive 
 -->
 
